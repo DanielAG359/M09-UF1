@@ -24,8 +24,10 @@ public class Rot13 {
                 for (int j = 0; j < abecedario.length; j ++){
                     if (abecedario[j] == lletra){
                         if ((j + 13) > 27){
-                            int t = j - 27;
-                            stringFinal += abecedario[t];
+                            int t = (j + 13) - 27;
+                            stringFinal = stringFinal + abecedario[t];
+                        }else{
+                            stringFinal = stringFinal + abecedario[(j + 13)];
                         }
                     }
                 }
@@ -33,20 +35,56 @@ public class Rot13 {
                 for (int j = 0; j < abecedarioMayusculas.length; j ++){
                     if (abecedarioMayusculas[j] == lletra){
                         if ((j + 13) > 27){
-                            int t = j - 27;
-                            stringFinal += abecedarioMayusculas[t];
+                            int t = (j + 13) - 27;
+                            stringFinal = stringFinal + abecedarioMayusculas[t];
+                        }else{
+                            stringFinal = stringFinal + abecedarioMayusculas[(j + 13)];
                         }
                     }
                 }
             }else{
-                stringFinal += lletra;
+                stringFinal = stringFinal + lletra;
+                System.out.println(stringFinal);
             }
         }
         return stringFinal;
     }
-    //public static String desxifraRot13(String cadena){}
+    public static String desxifraRot13(String cadena){
+        String stringFinal = "";
+        for (int i = 0; i < cadena.length(); i++){
+            char lletra = cadena.charAt(i);
+            if (Character.isLowerCase(lletra)){
+                for (int j = 0; j < abecedario.length; j ++){
+                    if (abecedario[j] == lletra){
+                        if ((j - 13) < 0){
+                            int t = (j - 13) + 27;
+                            stringFinal = stringFinal + abecedario[t];
+                        }else{
+                            stringFinal = stringFinal + abecedario[(j - 13)];
+                        }
+                    }
+                }
+            }else if(Character.isUpperCase(lletra)){
+                for (int j = 0; j < abecedarioMayusculas.length; j ++){
+                    if (abecedarioMayusculas[j] == lletra){
+                        if ((j - 13) < 0){
+                            int t = (j - 13) + 27;
+                            stringFinal = stringFinal + abecedarioMayusculas[t];
+                        }else{
+                            stringFinal = stringFinal + abecedarioMayusculas[(j - 13)];
+                        }
+                    }
+                }
+            }else{
+                stringFinal = stringFinal + lletra;
+                System.out.println(stringFinal);
+            }
+        }
+        return stringFinal;
+    }
     public static void main(String[]args){
         String line = readLine();
         System.out.println(xifraRot13(line));
+        System.out.println(desxifraRot13(xifraRot13(line)));
     }
 }
