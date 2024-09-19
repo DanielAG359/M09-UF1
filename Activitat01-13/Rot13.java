@@ -81,6 +81,7 @@ public class Rot13 {
         return stringFinal;
     }
     public static void main(String[]args){
+        System.out.println("Escriu:");
         String line = readLine();
         System.out.println(xifraRot13(line));
         System.out.println(desxifraRot13(xifraRot13(line)));
