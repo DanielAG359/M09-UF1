@@ -44,7 +44,6 @@ public class Rot13 {
                 }
             }else{
                 stringFinal = stringFinal + lletra;
-                System.out.println(stringFinal);
             }
         }
         return stringFinal;
@@ -77,7 +76,6 @@ public class Rot13 {
                 }
             }else{
                 stringFinal = stringFinal + lletra;
-                System.out.println(stringFinal);
             }
         }
         return stringFinal;
