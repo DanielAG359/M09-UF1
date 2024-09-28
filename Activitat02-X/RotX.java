@@ -21,59 +21,41 @@ public class RotX {
         for (int i = 0; i < cadena.length(); i++){
             char lletra = cadena.charAt(i);
             if (Character.isLowerCase(lletra)){
-                for (int j = 0; j < abecedario.length; j ++){
-                    if (abecedario[j] == lletra){
-                        if ((j + num) > abecedario.length){
-                            int t = (j + num) - abecedario.length;
-                            stringFinal = stringFinal + abecedario[t];
-                        }else{
-                            stringFinal = stringFinal + abecedario[(j + num)];
-                        }
-                    }
-                }
+                stringFinal = stringFinal + funcionAbecedario(cadena, num, lletra, true, abecedario);
             }else if(Character.isUpperCase(lletra)){
-                for (int j = 0; j < abecedarioMayusculas.length; j ++){
-                    if (abecedarioMayusculas[j] == lletra){
-                        if ((j + num) > abecedarioMayusculas.length){
-                            int t = (j + num) - abecedarioMayusculas.length;
-                            stringFinal = stringFinal + abecedarioMayusculas[t];
-                        }else{
-                            stringFinal = stringFinal + abecedarioMayusculas[(j + num)];
-                        }
-                    }
-                }
+                stringFinal = stringFinal + funcionAbecedario(cadena, num, lletra, true, abecedarioMayusculas);
             }else{
                 stringFinal = stringFinal + lletra;
             }
         }
         return stringFinal;
     }
+    public static char funcionAbecedario (String cadena, int num, char lletra, boolean binario, char[] abecedarioComplementario){
+        for (int j = 0; j < abecedarioComplementario.length; j ++){
+            if (abecedarioComplementario[j] == lletra){
+                if (binario){
+                    while ((j + num) > abecedarioComplementario.length){
+                        j = j - abecedarioComplementario.length;
+                    }
+                    return abecedarioComplementario[(j + num)];
+                }else{
+                    while ((j - num) < 0){
+                        j = j + abecedarioComplementario.length;
+                    }
+                    return abecedarioComplementario[(j - num)];
+                }
+            }
+        }
+        return lletra;
+    }
     public static String desxifraRotX(String cadena, int num){
         String stringFinal = "";
         for (int i = 0; i < cadena.length(); i++){
             char lletra = cadena.charAt(i);
             if (Character.isLowerCase(lletra)){
-                for (int j = 0; j < abecedario.length; j ++){
-                    if (abecedario[j] == lletra){
-                        if ((j - num) < 0){
-                            int t = (j - num) + abecedario.length;
-                            stringFinal = stringFinal + abecedario[t];
-                        }else{
-                            stringFinal = stringFinal + abecedario[(j - num)];
-                        }
-                    }
-                }
+                stringFinal = stringFinal + funcionAbecedario(cadena, num, lletra, false ,abecedario);
             }else if(Character.isUpperCase(lletra)){
-                for (int j = 0; j < abecedarioMayusculas.length; j ++){
-                    if (abecedarioMayusculas[j] == lletra){
-                        if ((j - num) < 0){
-                            int t = (j - num) + abecedarioMayusculas.length;
-                            stringFinal = stringFinal + abecedarioMayusculas[t];
-                        }else{
-                            stringFinal = stringFinal + abecedarioMayusculas[(j - num)];
-                        }
-                    }
-                }
+                stringFinal = stringFinal + funcionAbecedario(cadena, num, lletra, false , abecedarioMayusculas);
             }else{
                 stringFinal = stringFinal + lletra;
             }
@@ -85,8 +67,17 @@ public class RotX {
         String line = readLine();
         System.out.println("Rotacio:");
         int num = Integer.parseInt(readLine());
-        line = xifraRotX(line, num);
-        System.out.println(line);
-        System.out.println(desxifraRotX(line, num));
+        if (num < 0 || num > 42){
+            System.out.println("Num fora de rang.");
+        }else{
+            line = xifraRotX(line, num);
+            System.out.println(line);
+            System.out.println(desxifraRotX(line, num));
+        }
+        System.out.println("Proba:");
+        for (int i = 1; i < 13; i ++){
+            System.out.println("Xifrat: " + xifraRotX("Hola bon día", i));
+            System.out.println("Desxifrat: " + desxifraRotX(xifraRotX("Hola bon día", i), i));
+        }
     }
 }
