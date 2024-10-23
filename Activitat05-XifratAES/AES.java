@@ -12,7 +12,7 @@ public class AES {
 
     private static final int MIDA_IV = 16;
     private static byte[] iv = new byte[MIDA_IV];
-    private static final String CLAU = "LaClauSecretaQueVulguis";
+    private static final String CLAU = "AguaDeKoko";
 
     public static byte[] xifraAES(String msg, String clau) throws Exception {
         new SecureRandom().nextBytes(iv);
