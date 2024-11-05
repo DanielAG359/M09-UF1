@@ -1,66 +1,48 @@
 package iticbcn.xifratge;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.IOException;
+
 public class XifradorRotX implements Xifrador {
-    private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-    private final char[] abecedario = {'a','á','à','ä','b','c','ç','d','e','é','è','ë','f','g','h','i','í','ì','ï','j','k','l','m','n','ñ','o','ó','ò','ö','p','q','r','s','t','u','ú','ù','ü','v','w','x','y','z'};
-    private final char[] abecedarioMayusculas = {'A','Á','À','Ä','B','C','Ç','D','E','É','È','Ë','F','G','H','I','Í','Ì','Ï','J','K','L','M','N','Ñ','O','Ó','Ò','Ö','P','Q','R','S','T','U','Ú','Ù','Ü','V','W','X','Y','Z'};
-    public String readLine() {
+
+    @Override
+    public TextXifrat xifra(String msg, String clau) throws ClauNoSuportada {
         try {
-            String line = reader.readLine();
-            if (line == null) {
-                throw new RuntimeException("S'ha cridat massa cops Entrada.readLine()");
+            int rot = Integer.parseInt(clau);
+            if (rot < 0 || rot > 40) {
+                throw new ClauNoSuportada("Clau de RotX ha de ser un sencer de 0 a 40");
             }
-            return line;
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    public String xifraRotX(String cadena, int num) {
-        String stringFinal = "";
-        for (int i = 0; i < cadena.length(); i++){
-            char lletra = cadena.charAt(i);
-            if (Character.isLowerCase(lletra)){
-                stringFinal = stringFinal + funcionAbecedario(cadena, num, lletra, true, abecedario);
-            }else if(Character.isUpperCase(lletra)){
-                stringFinal = stringFinal + funcionAbecedario(cadena, num, lletra, true, abecedarioMayusculas);
-            }else{
-                stringFinal = stringFinal + lletra;
-            }
-        }
-        return stringFinal;
-    }
-    public char funcionAbecedario (String cadena, int num, char lletra, boolean binario, char[] abecedarioComplementario){
-        for (int j = 0; j < abecedarioComplementario.length; j ++){
-            if (abecedarioComplementario[j] == lletra){
-                if (binario){
-                    while ((j + num) > abecedarioComplementario.length){
-                        j = j - abecedarioComplementario.length;
-                    }
-                    return abecedarioComplementario[(j + num)];
-                }else{
-                    while ((j - num) < 0){
-                        j = j + abecedarioComplementario.length;
-                    }
-                    return abecedarioComplementario[(j - num)];
+
+            StringBuilder result = new StringBuilder();
+            for (char c : msg.toCharArray()) {
+                if (Character.isAlphabetic(c)) {
+                    result.append((char) ((c + rot - (Character.isLowerCase(c) ? 'a' : 'A')) % 26 + (Character.isLowerCase(c) ? 'a' : 'A')));
+                } else {
+                    result.append(c); // Mantener caracteres no alfabéticos
                 }
             }
+            return new TextXifrat(result.toString().getBytes());
+        } catch (NumberFormatException e) {
+            throw new ClauNoSuportada("Clau de RotX ha de ser un sencer de 0 a 40");
         }
-        return lletra;
     }
-    public String desxifraRotX(String cadena, int num){
-        String stringFinal = "";
-        for (int i = 0; i < cadena.length(); i++){
-            char lletra = cadena.charAt(i);
-            if (Character.isLowerCase(lletra)){
-                stringFinal = stringFinal + funcionAbecedario(cadena, num, lletra, false ,abecedario);
-            }else if(Character.isUpperCase(lletra)){
-                stringFinal = stringFinal + funcionAbecedario(cadena, num, lletra, false , abecedarioMayusculas);
-            }else{
-                stringFinal = stringFinal + lletra;
+
+    @Override
+    public String desxifra(TextXifrat xifrat, String clau) throws ClauNoSuportada {
+        try {
+            int rot = Integer.parseInt(clau);
+            if (rot < 0 || rot > 40) {
+                throw new ClauNoSuportada("Clau de RotX ha de ser un sencer de 0 a 40");
             }
+
+            StringBuilder result = new StringBuilder();
+            for (char c : new String(xifrat.getBytes()).toCharArray()) {
+                if (Character.isAlphabetic(c)) {
+                    result.append((char) ((c - rot - (Character.isLowerCase(c) ? 'a' : 'A')) % 26 + (Character.isLowerCase(c) ? 'a' : 'A')));
+                } else {
+                    result.append(c); // Mantener caracteres no alfabéticos
+                }
+            }
+            return result.toString();
+        } catch (NumberFormatException e) {
+            throw new ClauNoSuportada("Clau de RotX ha de ser un sencer de 0 a 40");
         }
-        return stringFinal;
     }
 }
