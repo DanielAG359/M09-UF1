@@ -1,11 +1,8 @@
 public class ClauPublica {
-    private PublicKey publicKey;
-    private PrivateKey privateKey;
     public KeyPair generaParellClausRSA() throws Exception{
         KeyPairGenerator key = KeyPairGenerator.getInstance("RSA");
         key.initialize(2048);
-        publicKey = keyPair.getPublic();
-        privateKey = keyPair.getPrivate();
+        return key.generateKeyPair();
     }
     public byte[] xifraRSA(String msg, PublicKey clauPublica)throws Exception{
         try {
