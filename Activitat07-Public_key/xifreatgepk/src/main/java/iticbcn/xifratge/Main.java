@@ -4,8 +4,7 @@ import java.security.KeyPair;
 import javax.xml.bind.DatatypeConverter;
 
 public class Main {
-    
-    public static void main(String args[]) throws Exception {
+    public static void main(String[] args) throws Exception {
         ClauPublica cp = new ClauPublica();
         String msg = "Missatge de prova per xifrar áéíóú àèìòù äëïöü";
         KeyPair parellClaus = cp.generaParellClausRSA();
