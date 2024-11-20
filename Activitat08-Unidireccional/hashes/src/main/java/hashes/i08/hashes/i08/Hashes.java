@@ -4,14 +4,11 @@ import javax.crypto.spec.PBEKeySpec;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
-import java.util.ArrayList;
 import java.util.HexFormat;
 
 public class Hashes {
     public char[] forcaBruta = {'a','b','c','d','e','f','A','B','C','D','E','F','1','2','3','4','5','6','7','8','9','0','!'};
     public int npass = 0; 
-    public List<String> combinations;
     public String getSHA512AmbSalt(String pw, String salt){
         String generatedPassword = null;
         try {
@@ -98,6 +95,9 @@ public class Hashes {
 }
     
 //=====================================[SEGONA FORMA MES LENTA]========================================================================
+// public List<String> combinations;
+// import java.util.List;
+// import java.util.ArrayList;
 // public class Hashes {
 //     public char[] forcaBruta = {'a','b','c','d','e','f','A','B','C','D','E','F','1','2','3','4','5','6','7','8','9','0','!'};
 //     public int npass = 0; 
